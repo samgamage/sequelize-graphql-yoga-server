@@ -1,0 +1,19 @@
+type User {
+  id: Int!
+  username: String!
+  password: String!
+}
+
+type Query {
+  allUsers: [User!]!
+  getUser(id: Int!): User!
+}
+
+type RegisterResponse {
+  ok: Boolean!
+  user: User
+}
+
+type Mutation {
+  register(username: String!, password: String!): RegisterResponse!
+}
