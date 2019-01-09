@@ -11,8 +11,13 @@ const typeDefs = importSchema(path.join(__dirname, './schema/schema.graphql'));
 // get resolvers from resolvers folder
 const resolvers = mergeResolvers(fileLoader(path.join(__dirname, './resolvers')));
 
-const server = new GraphQLServer({ typeDefs, resolvers });
+// passing in the context as an object makes it undefined somehow
+// solution: pass in the context as a function with the request
+const server = new GraphQLServer({ typeDefs, resolvers, context: req => ({ ...req, models }) });
 
 models.sequelize.sync().then(() => {
-  server.start(({ port }) => console.log(`Server is running on localhost:${port}`));
+  server.start({ port: 8060 }, ({ port }) =>
+    console.log(
+      `========================================\n🚀  Server is running on localhost:${port}\n========================================`,
+    ));
 });

@@ -12,6 +12,7 @@ type Query {
 type RegisterResponse {
   ok: Boolean!
   user: User
+  error: String
 }
 
 type Mutation {

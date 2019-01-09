@@ -12,8 +12,11 @@ export default {
           user,
         };
       } catch (err) {
+        // todo: format errors
+        console.error(err);
         return {
           ok: false,
+          error: err,
         };
       }
     },
