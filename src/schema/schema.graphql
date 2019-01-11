@@ -2,6 +2,25 @@ type User {
   id: Int!
   username: String!
   password: String!
+  email: String!
+}
+
+type Error {
+  path: String!
+  message: String
+}
+
+type RegisterResponse {
+  ok: Boolean!
+  user: User
+  errors: [Error!]
+}
+
+type LoginResponse {
+  ok: Boolean!
+  token: String
+  refreshToken: String
+  errors: [Error!]
 }
 
 type Query {
@@ -9,12 +28,11 @@ type Query {
   getUser(id: Int!): User!
 }
 
-type RegisterResponse {
-  ok: Boolean!
-  user: User
-  error: String
-}
-
 type Mutation {
-  register(username: String!, password: String!): RegisterResponse!
+  register(
+    email: String!
+    username: String!
+    password: String!
+  ): RegisterResponse!
+  login(email: String!, password: String!): LoginResponse!
 }

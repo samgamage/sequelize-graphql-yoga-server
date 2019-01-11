@@ -1,4 +1,4 @@
-import bcrypt from 'bcryptjs';
+import { hash } from 'bcryptjs';
 
 export default (sequelize, DataTypes) => {
   const User = sequelize.define(
@@ -7,6 +7,16 @@ export default (sequelize, DataTypes) => {
       username: {
         type: DataTypes.STRING,
         unique: true,
+      },
+      email: {
+        type: DataTypes.STRING,
+        unique: true,
+        validate: {
+          isEmail: {
+            args: true,
+            msg: 'Invalid email',
+          },
+        },
       },
       password: {
         type: DataTypes.STRING,
@@ -21,7 +31,7 @@ export default (sequelize, DataTypes) => {
     {
       hooks: {
         afterValidate: async (user) => {
-          const hashedPassword = await bcrypt.hash(user.password, 12);
+          const hashedPassword = await hash(user.password, 12);
           user.password = hashedPassword;
         },
       },
