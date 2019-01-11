@@ -1,8 +1,8 @@
 type User {
   id: Int!
+  email: String!
   username: String!
   password: String!
-  email: String!
 }
 
 type Error {
@@ -21,6 +21,10 @@ type LoginResponse {
   token: String
   refreshToken: String
   errors: [Error!]
+}
+
+type Subscription {
+  newUser: User!
 }
 
 type Query {
