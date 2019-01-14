@@ -19,9 +19,10 @@ export default {
   Mutation: {
     login: (parent, { email, password }, { models, SECRET, SECRET2 }) =>
       tryLogin(email, password, models, SECRET, SECRET2),
-    register: async (_, args, { models }) => {
+    register: async (_, args, { models, user }) => {
       try {
-        const user = await models.User.create(args);
+        console.log(user);
+        const newUser = await models.User.create(args);
 
         pubsub.publish(NEW_USER, {
           newUser: {
@@ -31,7 +32,7 @@ export default {
 
         return {
           ok: true,
-          user,
+          newUser,
         };
       } catch (err) {
         return {

@@ -19,7 +19,7 @@ const resolvers = mergeResolvers(fileLoader(path.join(__dirname, './resolvers'))
 
 const context = req => ({
   models,
-  user: req.user,
+  user: req.request.user,
   SECRET,
   SECRET2,
 });
@@ -55,7 +55,7 @@ const addUser = async (req, res, next) => {
 server.express.use(addUser);
 
 models.sequelize.sync().then(() => {
-  server.start({ port: 8060 }, ({ port }) =>
+  server.start({ port: 8000 }, ({ port }) =>
     console.log(
       `========================================\n🚀  Server is running on localhost:${port}\n========================================`,
     ));
